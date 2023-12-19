@@ -13,4 +13,5 @@ public interface CustomerDAO {
      boolean delete(String id) throws SQLException, ClassNotFoundException ;
      String generateNewId() throws SQLException, ClassNotFoundException;
      boolean existCustomer(String id) throws SQLException, ClassNotFoundException;
+     public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException;
 }

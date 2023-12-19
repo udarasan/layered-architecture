@@ -13,4 +13,5 @@ public interface ItemDAO {
     public boolean update(ItemDTO itemDTO) throws SQLException, ClassNotFoundException;
     public boolean existItem(String code) throws SQLException, ClassNotFoundException;
     public String genarateId() throws SQLException, ClassNotFoundException;
+    public ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException;
 }
