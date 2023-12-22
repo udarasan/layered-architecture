@@ -118,6 +118,7 @@ public class PlaceOrderFormController {
 
 
                     } catch (SQLException e) {
+                        e.printStackTrace();
                         new Alert(Alert.AlertType.ERROR, "Failed to find the customer " + newValue + "" + e).show();
                     }
                 } catch (ClassNotFoundException e) {
