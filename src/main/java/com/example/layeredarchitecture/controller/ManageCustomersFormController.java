@@ -1,5 +1,7 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.bo.CustomerBO;
+import com.example.layeredarchitecture.bo.CustomerBOImpl;
 import com.example.layeredarchitecture.dao.CrudDAO;
 import com.example.layeredarchitecture.dao.custom.impl.CustomerDAOImpl;
 import com.example.layeredarchitecture.model.CustomerDTO;
@@ -35,7 +37,7 @@ public class ManageCustomersFormController {
     public TextField txtCustomerAddress;
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
-    CrudDAO customerDAO=new CustomerDAOImpl();
+    //CrudDAO customerDAO=new CustomerDAOImpl();
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         tblCustomers.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -68,7 +70,9 @@ public class ManageCustomersFormController {
         /*Get all customers*/
         try {
 
-            ArrayList<CustomerDTO> allCustomer=customerDAO.getAll();
+            CustomerBO customerBO=new CustomerBOImpl();
+            ArrayList<CustomerDTO> allCustomer=customerBO.getAllCustomer();
+
             for (CustomerDTO c:allCustomer) {
                 tblCustomers.getItems().
                         add(new CustomerTM(c.getId(),c.getName(),c.getAddress()));
