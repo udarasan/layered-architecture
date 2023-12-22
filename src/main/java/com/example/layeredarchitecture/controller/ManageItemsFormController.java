@@ -1,7 +1,7 @@
 package com.example.layeredarchitecture.controller;
 
-import com.example.layeredarchitecture.dao.ItemDAO;
-import com.example.layeredarchitecture.dao.ItemDAOImpl;
+import com.example.layeredarchitecture.dao.custom.ItemDAO;
+import com.example.layeredarchitecture.dao.custom.impl.ItemDAOImpl;
 import com.example.layeredarchitecture.model.ItemDTO;
 import com.example.layeredarchitecture.view.tdm.ItemTM;
 import com.jfoenix.controls.JFXButton;
@@ -72,7 +72,7 @@ public class ManageItemsFormController {
         try {
             /*Get all items*/
             ItemDAO itemDAO= new ItemDAOImpl();
-            ArrayList<ItemDTO> getAllItems=itemDAO.getAllItems();
+            ArrayList<ItemDTO> getAllItems=itemDAO.getAll();
             for (ItemDTO dto:getAllItems){
                 tblItems.getItems().add(new ItemTM(dto.getCode(),dto.getDescription(),dto.getUnitPrice(),dto.getQtyOnHand()));
 
@@ -134,7 +134,7 @@ public class ManageItemsFormController {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
             ItemDAO itemDAO = new ItemDAOImpl();
-            boolean isDelete =itemDAO.deleteItem(code);
+            boolean isDelete =itemDAO.delete(code);
             if (isDelete) {
 
                 tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
@@ -176,7 +176,7 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, code + " already exists").show();
                 }
                 ItemDAOImpl itemDAO  = new ItemDAOImpl();
-                boolean b = itemDAO.saveItem(new ItemDTO(code, description, unitPrice, qtyOnHand));
+                boolean b = itemDAO.save(new ItemDTO(code, description, unitPrice, qtyOnHand));
                 if (b) {
                     tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
                 }
@@ -216,13 +216,13 @@ public class ManageItemsFormController {
     }
     public boolean existItem(String code) throws SQLException, ClassNotFoundException {
         ItemDAO itemDAO=new ItemDAOImpl();
-        return itemDAO.existItem(code);
+        return itemDAO.exist(code);
     }
 
     private String generateNewId() {
         try {
             ItemDAO itemDAO = new ItemDAOImpl();
-            String newId = itemDAO.genarateId();
+            String newId = itemDAO.generateNewId();
             return newId;
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
